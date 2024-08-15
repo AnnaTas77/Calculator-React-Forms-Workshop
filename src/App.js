@@ -31,15 +31,22 @@ function App() {
 
   const numClickHandler = (e) => {
     e.preventDefault();
-
     let typedValue = e.target.value;
     // console.log(calc.num)
-
     setCalc({
       ...calc,
       num: calc.num === 0 ? typedValue : calc.num + typedValue,
     });
   };
+
+  const signClickHandler = (e) => {
+    e.preventDefault();
+    const typedSign = e.target.value;
+
+    setCalc({ ...calc, sign: typedSign, res: calc.num, num: 0 });
+  };
+
+  const signsArray = ["+", "-", "X", "/"];
 
   return (
     <>
@@ -50,7 +57,9 @@ function App() {
             <Button
               value={btn}
               className={btn === "=" ? "equals" : ""}
-              onClick={numClickHandler}
+              onClick={
+                signsArray.includes(btn) ? signClickHandler : numClickHandler
+              }
             />
           ))}
         </div>
