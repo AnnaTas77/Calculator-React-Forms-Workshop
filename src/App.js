@@ -33,25 +33,11 @@ function App() {
     e.preventDefault();
 
     let typedValue = e.target.value;
+    // console.log(calc.num)
 
-    setCalc((prevCalc) => {
-      const newNum = (() => {
-        if (prevCalc.num === "0" && typedValue === "0") {
-          return "0";
-        } else if (prevCalc.num === "0") {
-          return typedValue;
-        } else {
-          return prevCalc.num + typedValue;
-        }
-      })();
-
-      const newRes = prevCalc.sign ? prevCalc.sign : "0";
-
-      return {
-        ...prevCalc,
-        num: newNum,
-        res: newRes,
-      };
+    setCalc({
+      ...calc,
+      num: calc.num === 0 ? typedValue : calc.num + typedValue,
     });
   };
 
