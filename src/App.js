@@ -48,17 +48,53 @@ function App() {
 
   const signsArray = ["+", "-", "X", "/"];
 
+  const equalsClickHandler = (e) => {
+    if (calc.sign && calc.num) {
+      const math = (sign, a, b) => {
+        const num1 = Number(a);
+        const num2 = Number(b);
+        let result;
+
+        if (sign === "+") {
+          result = num1 + num2;
+        } else if (sign === "-") {
+          result = num1 - num2;
+        } else if (sign === "X") {
+          result = num1 * num2;
+        } else if (sign === "/") {
+          result = num1 / num2;
+        } else {
+          result = "ERROR";
+        }
+
+        return String(result);
+      };
+
+      setCalc({
+        ...calc,
+        num: math(calc.sign, calc.res, calc.num),
+        res: 0,
+        sign: "",
+      });
+    }
+  };
+
   return (
     <>
       <div className="wrapper">
         <Screen value={calc.num} />
         <div className="buttonBox">
-          {btnValues.map((btn) => (
+          {btnValues.map((btn, index) => (
             <Button
+              key={index}
               value={btn}
               className={btn === "=" ? "equals" : ""}
               onClick={
-                signsArray.includes(btn) ? signClickHandler : numClickHandler
+                signsArray.includes(btn)
+                  ? signClickHandler
+                  : btn === "="
+                  ? equalsClickHandler
+                  : numClickHandler
               }
             />
           ))}
